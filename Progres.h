@@ -2,9 +2,10 @@
 
 class Progres {
 
+public:
 	Progres()
 	{
-		std::cout << "Just for test!!";
+	
 	}
 
 	int getConsum()
@@ -58,14 +59,23 @@ class Progres {
 		this->carbohidratiMAX = carbohidratiMAX;
 	}
 
-	void getGrasimiMIN(double grasimiMIN)
+	void setGrasimiMIN(double grasimiMIN)
 	{
 		this->grasimiMIN = grasimiMIN;
 	}
-	void getGrasimiMAX(double grasimiMAX)
+	void setGrasimiMAX(double grasimiMAX)
 	{
 		this->grasimiMAX = grasimiMAX;
 	}
+	Progres operator+(Progres p)
+	{
+		Progres res;
+		res.consumul = this->consumul + p.consumul;
+		res.carbohidratiMIN = this->carbohidratiMIN + p.carbohidratiMIN;
+		res.grasimiMIN = this->grasimiMIN + p.grasimiMIN;
+	}
+
+	friend ostream& operator<<(ostream& o, Progres& p);
 
 private:
 	int consumul;

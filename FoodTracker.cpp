@@ -10,6 +10,7 @@
 #include "enums.h"
 #include "Aliment.h"
 #include "calculator-functions.cpp"
+#include "nutritional-values.h"
 #include "display-screens.cpp"
 using namespace std;
 
@@ -34,6 +35,14 @@ using namespace std;
 ///noi aici o sa avem de creeat un user
 ///userul acesta este folosit doar o data
 ///adica per aplicatie vom avea doar un singur user
+
+double userkcalPerDay;
+double userfats;
+double userglucides;
+double userfibres;
+double userproteins;
+double usersalt;
+
 
 void editUser(User &d)
 {
@@ -722,21 +731,37 @@ bool existsUser()
 ///daca nu voi pastra chestia asta ca nu am user si voi cere creeare
 ///unuia daca acesta nu exista
 
+///cum fac valorie externe???
+
+ostream& operator<<(ostream& o, Progres p)
+{
+    o << p.getConsum() << endl << p.getCarbohidratiMIN() << endl << p.getGrasimiMIN() << endl;
+    return o;
+}
+
+ostream& operator<<(ostream& o, Menu& m)
+{
+    o << m.getReal();
+    o<< m.getExpected();
+    return o;
+}
+
+ostream& operator<<(ostream& z, Meal& m)
+{
+    z << m.getData()<<endl;
+     z << m.getReal();
+     z << m.getExpected();
+    return z;
+}
+
 int main()
 {
     
-    User u1;
+   User u1;
     Aliment a[10];
     int nr = 0;
     
-
-
-    double kcalPerDay, fats, glucides, fibres, proteins, salt;
-    kcalPerDay = calculateKcals(u1);
-    fats = calculateFats(u1, kcalPerDay);
-    fibres = calculateFibres(kcalPerDay);
-    glucides = calculateCarbs(u1, kcalPerDay);
-    proteins = calculateProteins(u1, kcalPerDay);
+   
     display_logo();
 
     ///daca userul nu exista
@@ -748,10 +773,18 @@ int main()
     ///si dupa ce facem este ca vom merge mai departe cu meniul
     char c = '0';
   
-    if(userExists)
+    if (userExists)
+    {
         u1 = dataGathering();
+        userkcalPerDay = calculateKcals(u1);
+        userfats = calculateFats(u1, userkcalPerDay);
+        userfibres = calculateFibres(userkcalPerDay);
+        userglucides = calculateCarbs(u1, userkcalPerDay);
+        userproteins = calculateProteins(u1, userkcalPerDay);
+    }
+        
 
-    while (c != '4')
+    while (c != '5')
     {
         fflush(stdin);
         system("cls");
@@ -820,7 +853,7 @@ int main()
         else {
 
          
-            while (c != '4' && c != '1')
+            while (c != '5' && c != '1')
             {
                 
                 cout << "\n!!! Nu exista niciun user, va rog creeati unul folosind optiune 1 din lista!!\n";
@@ -838,16 +871,22 @@ int main()
             case '1':
                 u1 = createUser();
                 Sleep(1000);
+                userkcalPerDay = calculateKcals(u1);
+                userfats = calculateFats(u1, userkcalPerDay);
+                userfibres = calculateFibres(userkcalPerDay);
+                userglucides = calculateCarbs(u1, userkcalPerDay);
+                userproteins = calculateProteins(u1, userkcalPerDay);
                 welcome(u1);
                 userExists = true;
                 break;
-            case '4':
+            case '5':
                 break;
             }
 
         }
     }
-   
+    
+    
     return 0;
 }
 

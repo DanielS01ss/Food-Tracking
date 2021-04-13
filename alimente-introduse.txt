@@ -1,0 +1,28 @@
+---->> Mic dejun <<----
+Paine
+Cantitate:1.000000
+Portie:1.000000
+---->> Pranz <<----
+Ciorba
+Cantitate:1.000000
+Portie:1.000000
+---->> Cina <<----
+Sunca
+Cantitate:1.000000
+Portie:1.000000
+---->> Gustare <<----
+Ciocolata
+Cantitate:1.000000
+Portie:1.000000
+---->> Gustare <<----
+Ciocolata
+Cantitate:1.000000
+Portie:1.000000
+---->> Gustare <<----
+Ciocolata
+Cantitate:1.000000
+Portie:1.000000
+---->> Mic dejun <<----
+Paine
+Cantitate:1.000000
+Portie:1.000000

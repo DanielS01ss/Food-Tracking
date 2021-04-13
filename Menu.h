@@ -5,6 +5,8 @@
 
 class Menu {
 
+public:
+
 	Menu()
 	{
 
@@ -15,6 +17,63 @@ class Menu {
 		this->expected = exp;
 		this->real = real;
 	}
+
+	Progres getProgresReal()
+	{
+		return this->real;
+	}
+	Progres getProgresExpected()
+	{
+		return this->expected;
+	}
+
+	void setAlimenteConsumate(vector<Produs> alimCons)
+	{
+		this->alimente_consumate = alimCons;
+	}
+	void setAlimenteRecomandate(vector<Produs> alimRecom)
+	{
+		this->alimente_recomandate = alimRecom;
+	}
+
+	void setProgresReal(Progres rl)
+	{
+		this->real = rl;
+	}
+	
+	void setProgresExpected(Progres ex)
+	{
+		this->expected = ex;
+	}
+	///progresul este suma datelor din fiecare produs
+
+	void calculateProgressReal()
+	{
+		for (int i = 0; i < this->alimente_consumate.size(); i++)
+		{
+			
+			this->real.setConsum((this->alimente_consumate[i].getAliment().getValEnergetica() * this->alimente_consumate[i].getQuantity()) / this->alimente_consumate[i].getAliment().getCantitate());
+			this->real.setProteineMIN(this->alimente_consumate[i].getAliment().getProteine());
+			this->real.setCarbohidratiMIN(this->alimente_consumate[i].getAliment().getGlucide());
+			this->real.setGrasimiMIN(this->alimente_consumate[i].getAliment().getGrasimi());
+		}
+	}
+	///aici faza e ca ne va calcula functia 
+	void calculateProgressExpected()
+	{
+
+	}
+	
+	Progres getExpected()
+	{
+		return this->expected;
+	}
+
+	Progres getReal()
+	{
+		return this->real;
+	}
+	friend ostream& operator<<(ostream& o, Menu& m);
 
 private:
 	Progres expected, real;
