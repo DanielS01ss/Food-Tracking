@@ -127,7 +127,11 @@ void editUser(User &d)
         else if (option == '3')
         {
             bool sex;
-            char gender;
+          
+            cin.get();
+            system("cls");
+            cout << "Introduceti sexul:";
+            char gender ;
             cin >> gender;
             while (gender != 'M' && gender != 'F' && gender != 'm' && gender != 'f')
             {
@@ -142,7 +146,9 @@ void editUser(User &d)
                 sex = 1;
             
             d.setSex(sex);
+            system("cls");
         }
+
         else if (option == '4')
         {
             system("cls");
@@ -703,91 +709,6 @@ bool existsUser()
 ///ca sa returneze alimentele pe fisiere si pe mese ale zilei
 ///va fi cate un vector pentru fiecare masa a zilei
 
-void getAlimente(Aliment alim[], int &k)
-{
-    ///ce face aceasta functie este ca va trebuie sa intre in fisierul cu alimente
-    ///si ce va face aceasta functie este ca va intra in fisier
-    ///si va lua fiecare linie ca pe un string si dupa ce il parsuieste
-    ///va atribui alimentele in vector
-
-    ifstream f("alimente.txt");
-    ///declaram o linie
-    string line, token;
-    ///citim aceasta linie din fisier
-   
-    size_t pos = 0;
-    int i = 0;
-    /*
-    std::string nume
-    double val_energetica
-    double grasimi
-    double glucide
-    double fibre 
-    double proteine
-    double sare
-    double cantitate
-    */
-   while (!f.eof())
-    {
-        getline(f, line);
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setNume(token);
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setValEnergetica(stod(token));
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setGrasimi(stod(token));
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setGlucide(stod(token));
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setFibre(stod(token));
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setProteine(stod(token));
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setSare(stod(token));
-        
-
-        pos = line.find(",");
-        token = line.substr(0, pos);
-        line.erase(0, pos + 1);
-        alim[i].setCantitate(stod(token));
-        i++;
-    }
-   k = i;
-     ///setam pozitia la 0
-     
-     ///cautam prima virgula
-     ///si returnam pozitia primei virgule
-     
-     ///ce avem pana la prima virgula care a fost mentionat ca si pozitie
-     /// vom lua si vom stoca intr-un token
-     ///si token practic este prima chestie care ne intereseaza
-     ////adica daca avem ceva la modul name calories si fat
-     ///ce va face este ca va
-    
-     ///dupa acesta vom sterge totul pana la token inclusiv
-     
-
-}
 
 ///acuma ce mai trebuie sa facem este sa creem functia care ne calculeaza 
 ///cat trebuie sa consume userul nostru
@@ -807,7 +728,7 @@ int main()
     User u1;
     Aliment a[10];
     int nr = 0;
-    getAlimente(a, nr);
+    
 
 
     double kcalPerDay, fats, glucides, fibres, proteins, salt;
@@ -850,31 +771,50 @@ int main()
         if (userExists)
         {
            
-            switch (c)
+            while (c != '5')
             {
-            case '1':
-                u1 = createUser();
-                Sleep(1000);
-                ///welcome(u1);
-                break;
-            case '2':
-                u1 = dataGathering();
-                displayData(u1);
-                //welcome(u1);
-                break;
-            case '3':
-                editUser(u1);
-                //welcome(u1);
-                break;
-            case '4':
-                welcome(u1);
-                break;
-            case '5':
-                exit(0);
-                break;
-            
-            }
+                switch (c)
+                {
+                case '1':
+                    u1 = createUser();
+                    Sleep(1000);
+                    ///welcome(u1);
+                    break;
+                case '2':
+                    u1 = dataGathering();
+                    displayData(u1);
+                    //welcome(u1);
+                    break;
+                case '3':
+                    editUser(u1);
+                    //welcome(u1);
+                    break;
+                case '4':
+                    welcome(u1);
+                    break;
+                case '5':
+                    exit(0);
+                    break;
 
+                }
+                fflush(stdin);
+                system("cls");
+                cout << "1.Creeare User\n";
+                cout << "2.Afisare User\n";
+                cout << "3.Editare User\n";
+                cout << "4.Accesare User\n";
+                cout << "5.Iesire\n";
+                cout << endl << endl;
+                cin >> c;
+                while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4)
+                {
+                    cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+                    cin >> c;
+                }
+
+
+            }
+         
 
         }
         else {

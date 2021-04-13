@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "Produs.h"
+#include "Aliment.h"
 #include "User.h"
 
 using namespace std;
@@ -25,7 +27,7 @@ void writeAlimente()
     char c;
     cin >> c;
 
-    while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4)
+    while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4) || !isdigit(c))
     {
         cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
         cin >> c;
@@ -55,6 +57,7 @@ void writeAlimente()
      ///acuma ce facem este ca vom introduce un aliment in fisier
 
     ///std::string nume, double val_energetica,double grasimi, double glucide, double fibre,double proteine,double cantitate
+    system("cls");
     string nume;
     string line;
     double val_energ, grasimi, glucide, fibre, proteine, cantitate, sare;
@@ -162,17 +165,81 @@ void displayData(User u)
 
 
 
-void toUpperStr(string s)
+void getAlimente(Aliment alim[], int& k,string fileName)
 {
-    for (int i = 0; i < s.size(); i++)
+    ///ce face aceasta functie este ca va trebuie sa intre in fisierul cu alimente
+    ///si ce va face aceasta functie este ca va intra in fisier
+    ///si va lua fiecare linie ca pe un string si dupa ce il parsuieste
+    ///va atribui alimentele in vector
+
+    ifstream f(fileName);
+    ///declaram o linie
+    string line, token;
+    ///citim aceasta linie din fisier
+
+    size_t pos = 0;
+    int i = 0;
+    /*
+    std::string nume
+    double val_energetica
+    double grasimi
+    double glucide
+    double fibre
+    double proteine
+    double sare
+    double cantitate
+    */
+    while (!f.eof())
     {
-        if (s[i] > '=a' && s[i] <= 'z')
-        {
-            s[i] = s[i] - 32;
-        }
+        getline(f, line);
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setNume(token);
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setValEnergetica(stod(token));
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setGrasimi(stod(token));
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setGlucide(stod(token));
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setFibre(stod(token));
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setProteine(stod(token));
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setSare(stod(token));
+
+
+        pos = line.find(",");
+        token = line.substr(0, pos);
+        line.erase(0, pos + 1);
+        alim[i].setCantitate(stod(token));
+        i++;
     }
+    k = i;
+   
+
 
 }
+
 
 ///aceasta este doar o functie de afisare aicea
 void getAlimente()
@@ -305,7 +372,7 @@ void viewAlimente()
     cout << "1.Introduse"<<endl;
     cout << "2.Recomandate"<<endl;
     cin >> c;
-    while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2))
+    while (isdigit(c) && ((c - '0') != 1 && (c - '0') != 2)||!isdigit(c))
     {
         cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
         cin >> c;
@@ -328,7 +395,7 @@ void viewProgress()
     cout << "1.Real" << endl;
     cout << "2.Expected"<<endl;
     cin >> c;
-    while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2))
+    while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2))||!isdigit(c))
     {
         cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
         cin >> c;
@@ -345,11 +412,150 @@ void viewProgress()
 
 }
 
+///in functia asta ce facem este ca avem o functie care
+///ce va face este ca ne va afisa mesele si cand userul selecteaza o masa
+///ii afisam alimentele aferente acelei mese iar el ce va face este ca va selecta una din lista
+///si alimentele selectate le stocam intr-un vector 
+
+void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName)
+{
+    ///intram in fisierul cu micul dejun si extragem de acolo toate datele necesare
+    /// si dupa ce facem cu ele este ca ne apucam si le afisam ca apoi dupa ce isi alege userul
+    ///data sa o putem pune pe 
+    Produs p;
+    system("cls");
+    ///si acuma vom citi datele intr-un while din fisier
+    ///le vom stoca pe toate in aliment
+    ///afisam alimentele cu numele mesei aferente
+    ///si ce facem este ca intrebam userul de alimentul pe care si-l doreste
+    ///sa il i-a si pe langa asta ii cerem si portia cat si cantiatea
+
+    cout << "<<<<<------------ " << mealName << " <<<<<------------ " << endl;
+    cout << endl << endl;
+    int i = 0;
+    for ( i = 0; i < n; i++)
+    {
+        cout << (i+1) << ". " << alim[i].getNume() << endl;
+        cout << alim[i].getValEnergetica() << endl;
+        cout << alim[i].getGrasimi() << endl;
+        cout << alim[i].getGlucide() << endl;
+        cout << alim[i].getFibre() << endl;
+        cout << alim[i].getProteine() << endl;
+        cout << alim[i].getSare() << endl;
+        cout << alim[i].getCantitate() << endl;
+        cout << endl << endl << endl;
+    }
+    cout << "Selectati va rog alimentul dorit din lista de mai sus:";
+  
+    char c = '-';
+    cin >> c;
+    while ((isdigit(c) && (c < '1' || c>(char)i)) || !isdigit(c))
+    {
+        cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+        cin >> c;
+    }
+    ///in a avem alimentul care ne intereseaza
+    p.setAliment(alim[c - '0'-1]);
+    ///si acuma intrebam de cantitate
+    cout << "Introduceti cantitea:";
+    double qt,portion;
+    cin >> qt;
+    cout << "Introduceti portia:";
+    cin >> portion;
+    p.setCantitate(qt);
+    p.setPortion(portion);
+    ///si acuma dupa ce am setat cantitatea si restul intrebam userul daca mai vrea sa mai introduca produse
+    prod.push_back(p);
+
+    char opt = 'z';
+    cout << "\n\n Doriti sa continuati sa introduceti produse??(y/n)\n\n";
+    cin >> opt;
+    if (opt == 'y')
+    {
+        while (opt!='n')
+        {
+            cout << "\n\nSelectati va rog alimentul dorit din lista de mai sus:";
+            
+            char c = '-';
+            cin >> c;
+            while ((isdigit(c) && (c < '1' || c>(char)i)) || !isdigit(c))
+            {
+                cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+                cin >> c;
+            }
+            ///in a avem alimentul care ne intereseaza
+            p.setAliment(alim[c - '0' - 1]);
+            ///si acuma intrebam de cantitate
+            cout << "Introduceti cantitea:";
+            double qt, portion;
+            cin >> qt;
+            cout << "Introduceti portia:";
+            cin >> portion;
+            p.setCantitate(qt);
+            p.setPortion(portion);
+            ///si acuma dupa ce am setat cantitatea si restul intrebam userul daca mai vrea sa mai introduca produse
+            prod.push_back(p);
+            cout << "\n\n Doriti sa continuati sa introduceti produse??(y/n)\n\n";
+            cin >> opt;
+        }
+
+    }
+    else {
+        return;
+    }
+
+}
+
+
+
+
 void enterFood()
 {
-    ///aicea o sa avem stocarea in fisier a datelor
-    ///adica practic vom introduce cate un produs 
-    cout << "Here we will enter the food!";
+    
+    Aliment alimente[20];
+    system("cls");
+    cout << "Introduceti masa in cadrul careia ati consumat alimentul:\n";
+    cout << "1.Mic dejun\n";
+    cout << "2.Pranz\n";
+    cout << "3.Cina\n";
+    cout << "4.Gustare";
+    char opt;
+    cin.get();
+    cin >> opt;
+
+    while ((isdigit(opt) && ((opt - '0') != 1 && (opt - '0') != 2))||!isdigit(opt))
+    {
+        cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+        cin >> opt;
+    }
+
+    ///in cazul micului dejun
+    ///deci noi afisam toate alimentele userului
+    ///si ce face el este ca va alege un aliment
+    ///si noi vom creea o instanta a clasei produs
+    ///si vom stoca acolo produsul
+    ///produs are un camp aliment unde vin stocat alimentul
+    ///dar are si portia cat si cantiatea
+    vector<Produs> prod;
+    int n = 0;
+    ///la cazul cerem produsele pentru micul dejun si le stocam 
+    switch (opt)
+    {
+    case '1':
+
+        getAlimente(alimente, n, "mic-dejun.txt");
+        setProductData(prod, alimente, n, "Mic Dejun");
+    case '2':
+        getAlimente(alimente, n, "pranz.txt");
+        setProductData(prod, alimente, n, "Pranz");
+    case '3':
+        getAlimente(alimente, n, "cina.txt");
+        setProductData(prod, alimente, n, "Cina");
+
+    case '4':
+        getAlimente(alimente, n, "gustare.txt");
+        setProductData(prod, alimente, n, "Gustare");
+    }
 
 }
 
@@ -366,7 +572,7 @@ void viewData()
         cout << "4.Inapoi" << endl;
         cout << endl;
         cin >> c;
-        while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4)
+        while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4)|| !isdigit(c))
         {
             cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
             cin >> c;
@@ -380,7 +586,7 @@ void viewData()
             viewAlimente();
             break;
         case '3':
-            enteredFoods();
+            enterFood();
             break;
         case '4':
             break;
@@ -407,7 +613,7 @@ void welcome(User u)
         cout << "4.Intoarcere";///aicea ne ofera posibilitatea de a ne intoarce la ecranul anterior
         cout << endl;
         cin >> c;
-        while (isalpha(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4)
+        while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4) || !isdigit(c))
         {
             cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
             cin >> c;

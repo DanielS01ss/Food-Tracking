@@ -1,14 +1,13 @@
 ﻿  FoodTracker.cpp
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(167,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(440,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(134,25): warning C4129: 'I': unrecognized character escape sequence
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(135,25): warning C4129: 'F': unrecognized character escape sequence
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(380,17): warning C4129: 'I': unrecognized character escape sequence
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(381,17): warning C4129: 'F': unrecognized character escape sequence
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(815,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(816,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(817,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(818,38): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(813,58): warning C4101: 'salt': unreferenced local variable
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(652,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(138,25): warning C4129: 'I': unrecognized character escape sequence
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(139,25): warning C4129: 'F': unrecognized character escape sequence
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(386,17): warning C4129: 'I': unrecognized character escape sequence
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(387,17): warning C4129: 'F': unrecognized character escape sequence
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(736,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(737,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(738,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(739,38): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(734,58): warning C4101: 'salt': unreferenced local variable
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\calculator-functions.cpp(72): warning C4715: 'calculateFats': not all control paths return a value
   FoodTracker.vcxproj -> C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\Debug\FoodTracker.exe

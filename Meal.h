@@ -3,6 +3,10 @@
 #include "Menu.h"
 #include <string>
 
+///clasa meal
+///contine mic dejun pranz si cina
+///dar mic dejun pranz si cina sunt mese care practic fac parte din menu
+//si noi in clasa meal stocam meniul cat si progresul
 class Meal {
 
 public:
