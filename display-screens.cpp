@@ -572,12 +572,6 @@ void enterFood()
     ofstream g;
     g.open("progres-real-menu.txt",ios::app);
 
-    /*
-        LOGICA PROGRESS:
-            
-    */
-    ///iteram toate mesele
-
     
     string data = now();
 
@@ -587,15 +581,7 @@ void enterFood()
     g << cina;
     g <<gustare;
 
-    ///si aicea putem sa tinem minte alimentele introduse
-    ///le vom stoca aici impreuna cu data
 
-
-    //prolema: cum stocam datele?
-    ///in fisier ca dupa trebuie sa le scoatem pentru progres
-    ///si am putea avea asa:
-   /// 1 progres pe date
-    ///progresul este practic cate kcal a consumat
     g.close();
 }
 
@@ -695,7 +681,7 @@ void  display_logo()
         cout << endl;
     }
 
-   /// Sleep(3000);
+    Sleep(3000);
     system("CLS");
 
 

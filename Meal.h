@@ -12,18 +12,27 @@ class Meal {
 public:
 	Meal()
 	{
-		std::cout << "Meal constructor!";
+		
 	}
 	Meal(Progres exp, Progres real)
 	{
 		this->expected = exp;
 		this->real = real;
 	}
+	void set_Real(Progres p)
+	{
+		this->real = p;
+	}
+
+	void set_Expected(Progres p) {
+		this->expected = p;
+	}
 
 	void set_Mic_Dejun(Menu m)
 	{
 		this->mic_dejun = m;
 	}
+
 	void set_Pranz(Menu m)
 	{
 		this->pranz= m;
@@ -69,10 +78,11 @@ public:
 	{
 		return this->gustari;
 	}
+	/*
 	void calculate_progress_real()
 	{
 		this->real = mic_dejun.getProgresReal() + cina.getProgresReal() + pranz.getProgresReal() + gustari.getProgresReal();
-	}
+	} */
 	friend ostream& operator<<(ostream& z, Meal& m);
 
 private:

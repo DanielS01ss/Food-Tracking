@@ -47,8 +47,11 @@ public:
 	}
 	///progresul este suma datelor din fiecare produs
 
+	///asta de aici vine reimplementat
+	
 	void calculateProgressReal()
 	{
+		/*
 		for (int i = 0; i < this->alimente_consumate.size(); i++)
 		{
 			
@@ -56,7 +59,7 @@ public:
 			this->real.setProteineMIN(this->alimente_consumate[i].getAliment().getProteine());
 			this->real.setCarbohidratiMIN(this->alimente_consumate[i].getAliment().getGlucide());
 			this->real.setGrasimiMIN(this->alimente_consumate[i].getAliment().getGrasimi());
-		}
+		} */
 	}
 	///aici faza e ca ne va calcula functia 
 	void calculateProgressExpected()
@@ -73,6 +76,16 @@ public:
 	{
 		return this->real;
 	}
+	vector<Produs> getAlimenteRecomandate()
+	{
+		return this->alimente_recomandate;
+	}
+
+	vector<Produs> getAlimenteConsumate()
+	{
+		return this->alimente_consumate;
+	}
+
 	friend ostream& operator<<(ostream& o, Menu& m);
 
 private:

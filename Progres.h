@@ -12,75 +12,55 @@ public:
 	{
 		return this->consumul;
 	}
-	double getProteineMIN()
+	double getProteine()
 	{
-		return this->proteineMIN;
-	}
-	double getProteineMAX()
-	{
-		return this->proteineMAX;
-	}
-	double getCarbohidratiMIN()
-	{
-		return this->carbohidratiMIN;
-	}
-	double getCarbohidratiMAX()
-	{
-		return this->carbohidratiMAX;
+		return this->proteine;
 	}
 	
-	double getGrasimiMIN()
+	double getCarbohidrati()
 	{
-		return this->grasimiMIN;
-	}
-	double getGrasimiMAX()
-	{
-		return this->grasimiMAX;
+		return this->carbohidrati;
 	}
 
+	double getGrasimi()
+	{
+		return this->grasimi;
+	}
+	
 	void setConsum(int consum)
 	{
 		 this->consumul = consum;
 	}
-	void setProteineMIN(double proteineMIN)
+	void setProteine(double proteine)
 	{
-		this->proteineMIN = proteineMIN;
+		this->proteine= proteine;
 	}
-	void setProteineMAX(double proteineMAX)
+	
+	void setCarbohidrati(double carbohidrati)
 	{
-		 this->proteineMAX = proteineMAX;
-	}
-	void setCarbohidratiMIN(double carbohidratiMIN)
-	{
-		this->carbohidratiMIN = carbohidratiMIN;
-	}
-	void setCarbohidratiMAX(double carbohidratiMax)
-	{
-		this->carbohidratiMAX = carbohidratiMAX;
+		this->carbohidrati = carbohidrati;
 	}
 
-	void setGrasimiMIN(double grasimiMIN)
+
+	void setGrasimi(double grasimi)
 	{
-		this->grasimiMIN = grasimiMIN;
+		this->grasimi = grasimi;
 	}
-	void setGrasimiMAX(double grasimiMAX)
-	{
-		this->grasimiMAX = grasimiMAX;
-	}
-	Progres operator+(Progres p)
+
+	/*Progres operator+(Progres p)
 	{
 		Progres res;
 		res.consumul = this->consumul + p.consumul;
 		res.carbohidratiMIN = this->carbohidratiMIN + p.carbohidratiMIN;
 		res.grasimiMIN = this->grasimiMIN + p.grasimiMIN;
 	}
-
+	*/
 	friend ostream& operator<<(ostream& o, Progres& p);
 
 private:
 	int consumul;
-	double proteineMIN, proteineMAX;
-	double carbohidratiMIN, carbohidratiMAX;
-	double grasimiMIN, grasimiMAX;
+	double proteine;
+	double carbohidrati;
+	double grasimi;
 	
 };

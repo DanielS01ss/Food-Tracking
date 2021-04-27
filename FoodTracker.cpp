@@ -733,37 +733,91 @@ bool existsUser()
 
 ///cum fac valorie externe???
 
+ostream& operator<<(ostream& o, Produs p)
+{
+    o << "Nume:" << p.getAliment().getNume() << "  Portie:" << p.getPortion() << "  Cantitate:" << p.getQuantity() << endl;
+    return o;
+}
+
 ostream& operator<<(ostream& o, Progres p)
 {
-    o << p.getConsum() << endl << p.getCarbohidratiMIN() << endl << p.getGrasimiMIN() << endl;
+    o << p.getConsum() << endl << p.getCarbohidrati() << endl << p.getGrasimi() << endl;
     return o;
 }
 
 ostream& operator<<(ostream& o, Menu& m)
 {
-    o << m.getReal();
-    o<< m.getExpected();
+    o <<"Progres Real:"<<m.getReal()<<endl;
+    o<< "Progres asteptat:"<<m.getExpected();
+    ///iteram alimente consumate si alimente recomandate
+    vector<Produs> alim_cons = m.getAlimenteConsumate();
+    vector<Produs> alim_recom = m.getAlimenteConsumate();
+    for (int i = 0; i < alim_cons.size(); i++)
+    {
+        o << alim_cons[i] << endl;
+    }
+    o << endl;
+    for (int i = 0; i < alim_recom.size(); i++)
+    {
+        o << alim_recom[i] << endl;
+    }
+
     return o;
 }
 
 ostream& operator<<(ostream& z, Meal& m)
 {
-    z << m.getData()<<endl;
-     z << m.getReal();
-     z << m.getExpected();
+     z << "Data:"<<m.getData()<<endl;
+     z <<"Progres Real:"<< m.getReal();
+     z <<"Progres asteptat:"<<m.getExpected();
+     z << "Mic dejun:"<< m.mic_dejun << endl;
+     z << "Pranz:"<< m.pranz << endl;
+     z <<"Cina:"<<m.cina << endl;
+     z <<"Gustari:"<<m.gustari << endl;
+
     return z;
 }
+
+
+///practic ce avem de facut este ca 
+///vom supraincarca operatorul de afisare pentru meal
+////cat si cel de citire
+///si ce va fi este ca vom avea un array in care vom stoca toate meal 
+///ce vor contine tot progresul pe care l-a facut el practic tot ce a mancat 
+///sau ce nu a mancat
+/// asa ca prima data o sa avem un proces de data gathering asta pe langa datele legtate de user
+///si vom avea si un sistem prin care stocam datele in fisier
+//practic un format ca dupa sa stim cum va functiona si data Gathering-ul
+
+
 
 int main()
 {
     
    User u1;
-    Aliment a[10];
-    int nr = 0;
+    Aliment mic_dejun[100],pranz[100],gustari[100],cina[100];
+    int nr = 0,
+        mic_dejun_size=0,
+        pranz_size = 0,
+        gustari_size=0,
+        cina_size =0 ;
+    vector<Meal>m;
+  
+   ///ar trebui sa tragem datele din fisier
+    ///din toate cele 3 fisiere ca apoi sa putem opera cu ele
+    getAlimente(mic_dejun, mic_dejun_size,"mic-dejun.txt");
+    getAlimente(pranz, pranz_size, "pranz.txt");
+    getAlimente(cina, cina_size, "cina.txt");
+    getAlimente(gustari, gustari_size, "gustare.txt");
+    getUserMealData(m, mic_dejun, mic_dejun_size, pranz, pranz_size, cina, cina_size, gustari, gustari_size);
     
+    for (int i = 0; i < m.size(); i++)
+    {
+        cout << m[i] << endl;
+    }
    
-    display_logo();
-
+  
+    /*
     ///daca userul nu exista
     ///trebuie sa creem unul
     ///si asta trebuie sa fie necesar
@@ -885,7 +939,7 @@ int main()
 
         }
     }
-    
+    */
     
     return 0;
 }
