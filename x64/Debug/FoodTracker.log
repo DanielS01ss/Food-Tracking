@@ -38,7 +38,11 @@ C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\Utility-functio
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\Utility-functions.cpp(583,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(16,1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp : message : see previous definition of '_CRT_SECURE_NO_WARNINGS'
-C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(552,44): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(465,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(469,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(510,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(514,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\display-screens.cpp(563,44): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(147,25): warning C4129: 'I': unrecognized character escape sequence
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(148,25): warning C4129: 'F': unrecognized character escape sequence
 C:\Users\stanc\Desktop\Food Tracker\Food tracker App\FoodTracker\FoodTracker.cpp(395,17): warning C4129: 'I': unrecognized character escape sequence

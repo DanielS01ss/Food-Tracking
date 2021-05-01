@@ -450,15 +450,27 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Me
     }
     cout << "Selectati va rog alimentul dorit din lista de mai sus:";
   
-    char c = '-';
+    ///vom modifica c-ul ca sa numai fie char si sa fie string
+
+    string c;
+    int c_int;
     cin >> c;
+    /*
     while (((isdigit(c) && (c < '1' || c>(i+'0')))) || !isdigit(c))
     {
         cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
         cin >> c;
+    } */
+    ///acuma ce face este ca vom incerca sa modifica,
+    c_int = stod(c);
+    while (c_int<1 || c_int>(i)) {
+        cout << "Introduceti o optiune valida va rog!!";
+        cin >> c;
+        c_int = stod(c);
     }
+    
     ///in a avem alimentul care ne intereseaza
-    p.setAliment(alim[c - '0'-1]);
+    p.setAliment(alim[c_int-1]);
     ///si acuma intrebam de cantitate
     cout << "Introduceti cantitea:";
     double qt,portion;
@@ -480,7 +492,7 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Me
     /// o sa avem doar o functie care va avea ca si parametru si masa unde dorim sa updatam progresul
     ///asa ca se va rezolva totul dintr-un apel de functie
 
-    set_progres(main_meal, alim[c - '0' - 1], qt, portion, mealName);
+    set_progres(main_meal, alim[c_int- 1], qt, portion, mealName);
    
     prod.push_back(p);
 
@@ -494,16 +506,15 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Me
         while (opt!='n')
            {
             cout << "\n\nSelectati va rog alimentul dorit din lista de mai sus:";
-            
-            char c = '-';
             cin >> c;
-            while ((isdigit(c) && (c < '1' || c>(i + '0'))) || !isdigit(c))
-            {
-                cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+            c_int = stod(c);
+            while (c_int<1 || c_int>(i)) {
+                cout << "Introduceti o optiune valida va rog!!";
                 cin >> c;
+                c_int = stod(c);
             }
             ///in a avem alimentul care ne intereseaza
-            p.setAliment(alim[c - '0' - 1]);
+            p.setAliment(alim[c_int - 1]);
             ///si acuma intrebam de cantitate
             cout << "Introduceti cantitea:";
             double qt, portion;
@@ -515,7 +526,7 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Me
             ///si acuma dupa ce am setat cantitatea si restul intrebam userul daca mai vrea sa mai introduca produse
             ///aici ce facem este ca updatam progresul si pentru urmatoarele produse pe care le introduce utilizator
              ///are loc o updatare de progres de fiecare data
-            set_progres(main_meal, alim[c - '0' - 1], qt, portion, mealName);
+            set_progres(main_meal, alim[c_int - 1], qt, portion, mealName);
             
             prod.push_back(p);
             cout << "\n\n Doriti sa continuati sa introduceti produse??(y/n)\n\n";
