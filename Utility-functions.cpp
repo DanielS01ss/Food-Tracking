@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <set> 
 #include "Aliment.h"
 #include "Progres.h"
 #include "Produs.h"
@@ -112,18 +113,21 @@ Progres parseProgress(string s)
     s.erase(0, pos + 1);
     ///aici ai consumul
     p.setConsum(stoi(token));
+   
 
     pos = s.find(",");
     token = s.substr(0, pos);
     s.erase(0, pos + 1);
     ///aici ai proteine
     p.setProteine(stod(token));
+  
 
     pos = s.find(",");
     token = s.substr(0, pos);
     s.erase(0, pos + 1);
     ///aici ai carbo
     p.setCarbohidrati(stod(token));
+ 
 
 
     pos = s.find(",");
@@ -131,7 +135,9 @@ Progres parseProgress(string s)
     s.erase(0, pos + 1);
     ///aici ai grasimi
     p.setGrasimi(stod(token));
+    
 
+    
     return p;
 
 }
@@ -205,11 +211,29 @@ int knapsack(int v[], int w[], int n, int W, int i)
     return max(include, exclude);
 }
 
+set <int>my_set;
+
+int random_num(int maxN)
+{
+    ///o data ce gasim un numar care este in set nu il stocam
+    ///daca nu se afla in set il stocam in set
+    ///si returnam
+    srand((unsigned)time(0));
+    int num = (rand() % maxN);
+   
+    while (my_set.count(num))
+    {
+        num = (rand() % maxN);
+    }
+    my_set.insert(num);
+    return num;
+}
 
 vector<int>stack;
 vector<int> indexes;
 vector<int> dummyData;
 
+int indt;
 void bkt(int k, int s, int full)
 {
     if (s >= full || k == dummyData.size())
@@ -217,10 +241,15 @@ void bkt(int k, int s, int full)
         return;
     }
     else {
-
-        stack.push_back(dummyData[k]);
+        indt = random_num(dummyData.size());
+        /*stack.push_back(dummyData[k]);
         indexes.push_back(k);
-        bkt(k + 1, s + dummyData[k], full);
+        bkt(k + 1, s + dummyData[k], full);*/
+        ///trebuie sa vedem daca numarul rand se afla sau nu in set
+
+        stack.push_back(dummyData[indt]);
+        indexes.push_back(indt);
+        bkt(k + 1, s + dummyData[indt], full);
     }
 
 }
@@ -249,24 +278,34 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     p.setGrasimi((grasimi*40)/100);
     p.setProteine((proteine * 40) / 100);
     p.setCarbohidrati((carbohidrati * 40) / 100);
- 
-
+  
     Progres pros1, pros2;
-    Menu masa = m.getMic_de_Jun();
-    m.set_Mic_Dejun(masa);
-    masa.setProgresExpected(p);
+    /*  system("cls");
+    pros1 = m.getMic_de_Jun().getProgresExpected();
 
+    system("pause");*/
+
+  
+    Menu masa = m.getMic_de_Jun();
+
+    masa.setProgresExpected(p);
+    m.set_Mic_Dejun(masa);
+
+  
+
+    ///pranz
     p = m.getPranz().getProgresExpected();
    
     p.setConsum((calories * 30) / 100);
     p.setGrasimi((grasimi * 30) / 100);
     p.setProteine((proteine * 30) / 100);
     p.setCarbohidrati((carbohidrati * 30) / 100);
-    p.setCarbohidrati((carbohidrati * 30) / 100);
     masa = m.getPranz();
     masa.setProgresExpected(p);
     m.set_Pranz(masa);
-
+    
+   
+    ///pranz
 
     p = m.getCina().getProgresExpected();
  
@@ -277,7 +316,8 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     masa = m.getCina();
     masa.setProgresExpected(p);
     m.set_Cina(masa);
-
+    pros1 = masa.getProgresExpected();
+   
 
 
     p = m.getGustari().getProgresExpected();
@@ -308,7 +348,8 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     ///prin backtracking obtinem indicii si ce vor face acesti indici este ca dupa ei ne vom  ghida sa stocam restul datelor
     ///pe stiva urcam toate valoriile si indexi si lor
     bkt(0, 0, val_max_mic_dejun);
- 
+    my_set.clear();
+
     setVectorZero(v,mic_dejun_size);
     setVectorZero(w,mic_dejun_size);
 
@@ -358,7 +399,7 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     bkt(0, 0, val_max_pranz);
     setVectorZero(v, pranz_size);
     setVectorZero(w, pranz_size);
-
+    my_set.clear();
   
 
     for (int i = 0; i < stack.size(); i++)
@@ -404,7 +445,7 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     bkt(0, 0, val_max_pranz);
     setVectorZero(v, cina_size);
     setVectorZero(w, cina_size);
-
+    my_set.clear();
     
 
     for (int i = 0; i < stack.size(); i++)
@@ -449,7 +490,7 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
     bkt(0, 0, val_max_gustari);
     setVectorZero(v, gustari_size);
     setVectorZero(w, gustari_size);
-
+    my_set.clear();
 
     for (int i = 0; i < stack.size(); i++)
     {
@@ -487,10 +528,14 @@ void recommendFoodPerMeal(Meal& m, Aliment mic_dejunA[100], int mic_dejun_size, 
 ///ca dupa sa ne putem juca cu ea si sa putem sa modificam datele ulterior
 Meal searchMeal(vector<Meal>& m, string date)
 {
+    ///daca gasim o data nu ii vom da push back la final
+    ///ce vom face este ca vom stoca indexul si ulterior il vom modifica
+ 
     for (int i = 0; i < m.size(); i++)
     {
         if (m[i].getData() == date)
         {
+          
             return m[i];
         }
     }
@@ -586,7 +631,7 @@ void set_progres(Meal& main_meal, Aliment a, double quantity, double portie,stri
         aux_progres = aux_menu.getProgresReal() + p;
         aux_menu.setProgresReal(aux_progres);
         main_meal.set_Cina(aux_menu);
-        main_meal.calculate_progress_real();
+         main_meal.calculate_progress_real();
     }
     else if (meal_name == "Gustare")
     {

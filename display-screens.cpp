@@ -479,7 +479,7 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Me
 
     /// o sa avem doar o functie care va avea ca si parametru si masa unde dorim sa updatam progresul
     ///asa ca se va rezolva totul dintr-un apel de functie
-    
+
     set_progres(main_meal, alim[c - '0' - 1], qt, portion, mealName);
    
     prod.push_back(p);
@@ -625,12 +625,16 @@ void enterFood(Meal& main_meal)
             ///aici retragem alimentele din fisierul mic de jun
 
             getAlimente(alimente, n, "mic-dejun.txt");
+           
             setProductData(prodMicDejun, alimente, n, "Mic Dejun",main_meal);
+           
             micDejun.setAlimenteConsumate(prodMicDejun);
             ///la mic dejun setam progresul real ca fiind          
+          
             micDejun.calculateProgressReal();
-            main_meal.set_Mic_Dejun(micDejun);
          
+            main_meal.set_Mic_Dejun(micDejun);
+        
             break;
 
         case '2':
@@ -657,7 +661,7 @@ void enterFood(Meal& main_meal)
             break;
         }
     }
-
+   
     vector<Produs> p;
     
 }
@@ -694,10 +698,8 @@ void viewData(Meal& main_meal,vector<Meal>&m)
             viewAlimente(main_meal);
             break;
         case '3':
-            
-            
+     
             enterFood(main_meal);
-
             break;
         case '4':
             break;
@@ -727,7 +729,7 @@ Meal searchData(vector<Meal> m)
 }
 
 
-void askOrSearch(Meal& main_meal,vector<Meal> m,bool runn)
+void askOrSearch(Meal& main_meal,vector<Meal>& m,bool runn)
 {
     if (runn)
         return;
@@ -790,7 +792,7 @@ void askOrSearch(Meal& main_meal,vector<Meal> m,bool runn)
 ///to do :
 /// introdu o functie care sa caute o anumita data in fisier
 ///ca userul sa lucreze fie cu meal-ul actual fie cu unul precedent
-void welcome(User u,Meal& main_meal,vector<Meal>m)
+void welcome(User u,Meal& main_meal,vector<Meal>&m)
 {
    
     char c ='0';
@@ -827,7 +829,6 @@ void welcome(User u,Meal& main_meal,vector<Meal>m)
            askOrSearch(main_meal,m,runned);
            runned = true;
            viewData(main_meal,m);
-
             break;
         case '4':
             break;

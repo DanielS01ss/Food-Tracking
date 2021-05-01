@@ -159,7 +159,7 @@ void getAlimente()
         pos = nume_fisiere[i].find(".");
         token = nume_fisiere[i].substr(0, pos);
 
-        cout << "\n\n>>>> " << token << " <<<<<<<\n\n";
+        cout << "\n\n>>>>>>>>>>>>>>>>>>>---->>>>> " << token << "<<<-----<<<<<<<<<<<<<<<<<<<\n\n";
         cout << endl << endl;
         while (!f.eof())
         {
@@ -211,6 +211,8 @@ void getAlimente()
             line.erase(0, pos + 1);
             cout << "Cantitate:" << token << endl;
 
+            cout << endl << endl;
+
         }
         f.close();
 
@@ -242,7 +244,7 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
     string dummy = "default";
     string data;
     string progres;
-   
+    string date;
     ///a doua incercare de a scrie o functie de citire corecta a dateleor
    
     bool pass = false;
@@ -254,13 +256,15 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         vector<Produs> al_recomandate;
         vector<Produs> al_consumate;
         ///prima data citim data
-        string date;
-        ///citim data din fisier
+        
+        ///daca data este goala si e prima data cand trecem prin fisier
+    
         if (date == "" && pass == false)
             getline(f, date);
         ///setam data pe setDate adica practic setam data pe meal
         if (date == "")
             return;
+
         pass = true;
         meal.setData(date);
         date = "";
@@ -283,12 +287,12 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         ///setam progresul asteptat
         getline(f, progres);
         p1 = parseProgress(progres);
-        mic_dejun.setProgresExpected(p1);
+        mic_dejun.setProgresReal(p1);
 
         ///setam progresul real
         getline(f, progres);
         p1 = parseProgress(progres);
-        mic_dejun.setProgresReal(p1);
+        mic_dejun.setProgresExpected(p1);
       
         ///acuma citim prima steluta
         getline(f, dummy);
@@ -323,7 +327,6 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         mic_dejun.setAlimenteConsumate(al_consumate);
         mic_dejun.setAlimenteRecomandate(al_recomandate);
    
-
         al_recomandate.clear();
         al_consumate.clear();
         
@@ -331,13 +334,13 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
 
         getline(f, progres);
         p1 = parseProgress(progres);
-        pranz.setProgresExpected(p1);
+        pranz.setProgresReal (p1);
 
         ///aici ce facem este ca setam progresul pentru pranz
         ///si il parsuim
         getline(f, progres);
         p1 = parseProgress(progres);
-        pranz.setProgresReal(p1);
+        pranz.setProgresExpected(p1);
 
 
         getline(f, dummy);
@@ -373,16 +376,16 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
 
         al_recomandate.clear();
         al_consumate.clear();
-
+     
         //////////////////////////////
         getline(f, progres);
         p1 = parseProgress(progres);
-        cina.setProgresExpected(p1);
+        cina.setProgresReal(p1);
 
 
         getline(f, progres);
         p1 = parseProgress(progres);
-        cina.setProgresReal(p1);
+        cina.setProgresExpected(p1);
 
         getline(f, dummy);
 
@@ -418,7 +421,7 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         cina.setAlimenteConsumate(al_consumate);
         cina.setAlimenteRecomandate(al_recomandate);
 
-
+    
         al_recomandate.clear();
         al_consumate.clear();
 
@@ -426,12 +429,12 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
 
         getline(f, progres);
         p1 = parseProgress(progres);
-        gustari.setProgresExpected(p1);
+        gustari.setProgresReal (p1);
 
 
         getline(f, progres);
         p1 = parseProgress(progres);
-        gustari.setProgresReal(p1);
+        gustari.setProgresExpected(p1);
 
         getline(f, dummy);
 
@@ -467,7 +470,7 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         gustari.setAlimenteConsumate(al_consumate);
         gustari.setAlimenteRecomandate(al_recomandate);
 
-
+    
         al_recomandate.clear();
         al_consumate.clear();
 
@@ -481,14 +484,22 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         ///aici ce trebuie sa facem este ca daca mai e sa ramana stelute ce trebuie
         ///sa le stergem
         ///facem stergere de stelute
-        getline(f, dummy);
-        if (dummy == "*")
-        {
-            while (dummy == "*")
-                getline(f, dummy);  
-            date = dummy;
-        }
+
+        char c[100];
+        while (f.getline(c,100) && strcmp(c, "*") == 0);
+      ///nu citeste bine datele ulterior
+        string dummy_date = c;
+        date = dummy_date;
         m.push_back(meal);
+        
     } 
   
 }
+
+/*
+
+
+
+
+
+*/

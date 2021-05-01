@@ -714,27 +714,6 @@ bool existsUser()
 
 
 
-///To do reimplementeaza functia asta
-///ca sa returneze alimentele pe fisiere si pe mese ale zilei
-///va fi cate un vector pentru fiecare masa a zilei
-
-
-///acuma ce mai trebuie sa facem este sa creem functia care ne calculeaza 
-///cat trebuie sa consume userul nostru
-///baza pe preferinte
-
-
-///trebuie verificat daca am un user
-///daca am user atunci ce voi face este ca voi
-///trage datele si voi calcula datele aferente pentru consumul caloric
-///zilnic al acestuia
-///daca nu voi pastra chestia asta ca nu am user si voi cere creeare
-///unuia daca acesta nu exista
-
-///cum fac valorie externe???
-
-
-
 ostream& operator<<(ostream& o, Produs& p)
 {
     o << p.getAliment().getNume() <<","<< p.getPortion() << "," << p.getQuantity() << endl;
@@ -743,7 +722,7 @@ ostream& operator<<(ostream& o, Produs& p)
 
 ostream& operator<<(ostream& o, Progres& p)
 {
-    o << p.getConsum() << "," << p.getCarbohidrati() << "," << p.getGrasimi() << endl;
+    o << p.getConsum()  << ","<<p.getProteine() <<","<<p.getCarbohidrati() << "," << p.getGrasimi() << endl;
     return o;
 }
 
@@ -802,10 +781,13 @@ Meal checkMainMeal(vector<Meal> m,string data)
 {
     ///iteram vectorul cu mese si dupa ce facem este ca daca gasim o masa care are aceiasi data cu aceasta
     ///atunci o vom lua pe aceea
+   
+
     for (int i = 0; i < m.size(); i++)
     {
         if (m[i].getData() == data)
         {
+       
             return m[i];
         }
     }
@@ -817,6 +799,9 @@ Meal checkMainMeal(vector<Meal> m,string data)
 int main()
 {
     ///declaram userul
+
+
+
    User u1;
    ///tragem alimentele
     Aliment mic_dejun[100],pranz[100],gustari[100],cina[100];
@@ -838,27 +823,21 @@ int main()
 
     getUserMealData(m, mic_dejun, mic_dejun_size, pranz, pranz_size, cina, cina_size, gustari, gustari_size);
    
-    ///aici avem masa principala
-    
-    
-
- 
-    ///prima data catuam in fisier mealul cu data curenta si ce facem
-    ///este ca daca o gasim ne apucam si o luam ca si main meal
-    ///ca dupa sa lucram pe ea
-  
-   
     Meal main_meal;
     bool checked = false;
+    bool found = false;
     Meal dummy = checkMainMeal(m, now());
- 
+    
+    
     if (!checked)
     {
+        ///daca am gasit data ce vom face este ca vom semnala asta in clasa helper
         if (dummy.getData() != "default")
         {
             main_meal = dummy;
-           
+            found = true;
             checked = true;
+         
         }
         else {
             //daca masa nu exista o creem si ii setam data curenta
@@ -867,7 +846,7 @@ int main()
         }
     }
     
- 
+
     ///ii setam si data
 
    
@@ -876,8 +855,8 @@ int main()
     system("pause");
     exit(0);*/
 
-
-
+   
+  
   
     ///daca userul nu exista
     ///trebuie sa creem unul
@@ -887,8 +866,9 @@ int main()
     ///daca nu avem user fortam creeare unuia!!
     ///si dupa ce facem este ca vom merge mai departe cu meniul
     char c = '0';
+ 
     
-
+    ///acuma ce facem este ca afisam toate datele din m
 
 
     if (userExists)
@@ -920,10 +900,19 @@ int main()
     ///si se va seta pe main meal
     
    ///display_logo();
-   
-
+  
+    /*
     
-    while (c != '5')
+    
+        COD DUMMMMMYYYYY
+
+
+        ADAUGAT JUST FOR TESTING!@!!!!!!!!!
+    
+    
+    */
+    
+   while (c != '5')
     {
         fflush(stdin);
         system("cls");
@@ -968,7 +957,6 @@ int main()
                 case '5':
                     exit(0);
                     break;
-
                 }
                 fflush(stdin);
                 system("cls");
@@ -1034,18 +1022,39 @@ int main()
 
    // main_meal.calculate_progress_real();
     //main_meal.calculate_progres_expected();
-   
-   
-    if(m.size()>0 && main_meal.getData()!=now())
-        m.push_back(main_meal);
-    else if (m.size() == 0)
-    {
-        m.push_back(main_meal);
-    }
- 
-
-
-   /// saveData(m); 
     
+    ///aici trebuie reimplementat
+    ///adica daca gasim un obiect fie ca este un obiect din trecut fie ca este cel prezent nu ii vom face
+    ///push back si ce vom face este ca il vom modifica pe vector
+
+
+    ///daca past meal este false
+    //inseamna ca vorbim de o noua masa pentru ziua aceasta
+    ///asa ca ce vom face este ca ii dam un push back
+ 
+    /*
+        Aicea afisam datele
+    */
+    ///daca data se gaseste in fisier deja
+   ///adica daca deja avem un obiect in vectorul m care are aceiasi data cu main meal ce facem
+    ///este ca schimbam aceea data
+    ///si daca nu exista atunci este o data noua si ii dam push back
+    int index = -1;
+    for (int i = 0; i < m.size(); i++)
+    {
+        if (m[i].getData() == main_meal.getData())
+        {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1)
+        m.push_back(main_meal);
+    else {
+        m[index] = main_meal;
+    }
+
+   saveData(m); 
+        
     return 0;
 }
