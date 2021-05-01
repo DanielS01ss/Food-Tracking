@@ -12,7 +12,7 @@ class Meal {
 public:
 	Meal()
 	{
-		
+		this->Data = "default";
 	}
 	Meal(Progres exp, Progres real)
 	{
@@ -78,11 +78,17 @@ public:
 	{
 		return this->gustari;
 	}
-	/*
+	
 	void calculate_progress_real()
 	{
 		this->real = mic_dejun.getProgresReal() + cina.getProgresReal() + pranz.getProgresReal() + gustari.getProgresReal();
-	} */
+	
+	}
+	void calculate_progres_expected()
+	{
+		this->expected = mic_dejun.getProgresExpected() + cina.getProgresExpected() + pranz.getProgresExpected() + gustari.getProgresExpected();
+	}
+
 	friend ostream& operator<<(ostream& z, Meal& m);
 
 private:

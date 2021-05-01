@@ -45,7 +45,14 @@ string now()
     time_t tmNow;
     tmNow = time(NULL);
     struct tm t = *localtime(&tmNow);
-    string str = to_string(t.tm_mday)+"-"+ to_string(t.tm_mon)+"-"+ to_string(t.tm_year+1900);
+    int day = stoi(to_string(t.tm_mday));
+    int month = stoi(to_string(t.tm_mon+1));
+    int year = stoi(to_string(t.tm_year + 1900));
+    string day_str = (day < 10) ? ("0" + to_string(day)) : (to_string(day));
+    string month_str = (month < 10) ? ("0" + to_string(month)) : (to_string(month));
+    string year_str = to_string(year);
+    
+    string str = day_str+"/"+month_str+"/"+year_str;
     return str;
 }
 
@@ -224,7 +231,7 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
 
     ///acuma vom avea doua variante
     ///daca exista fisierul si daca nu exista fisierul
-    ifstream f("logs.txt");
+    ifstream f("logs2.txt");
 
     if (!f)
     {
@@ -232,8 +239,13 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
     }
 
     ///citim pana la finalul fisierului
-    string dummy;
+    string dummy = "default";
     string data;
+    string progres;
+   
+    ///a doua incercare de a scrie o functie de citire corecta a dateleor
+   
+    bool pass = false;
     while (!f.eof())
     {
         Menu mic_dejun,pranz,cina,gustari;
@@ -243,47 +255,58 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         vector<Produs> al_consumate;
         ///prima data citim data
         string date;
-        getline(f, date);
+        ///citim data din fisier
+        if (date == "" && pass == false)
+            getline(f, date);
+        ///setam data pe setDate adica practic setam data pe meal
+        if (date == "")
+            return;
+        pass = true;
         meal.setData(date);
-       
-        string progres;
+        date = "";
+        ///luam progresul din fisier
+        ///si il parsuim 
+
         getline(f, progres);
         Progres p1 = parseProgress(progres);
- 
         meal.set_Expected(p1);
 
         getline(f, progres);
         Progres p2 = parseProgress(progres);
         
+        ///setam progresul real
         meal.set_Real(p2);
 
 
         //// DE AICI INCEPE CODUL PER MEAL
 
+        ///setam progresul asteptat
         getline(f, progres);
         p1 = parseProgress(progres);
         mic_dejun.setProgresExpected(p1);
 
-
+        ///setam progresul real
         getline(f, progres);
         p1 = parseProgress(progres);
         mic_dejun.setProgresReal(p1);
       
+        ///acuma citim prima steluta
         getline(f, dummy);
         data = "";
         while (data != "*")
         {
             if (data.size() != 0)
             {
+                ///citim alimentul si daca se afla il introduce sub forma de produs
                 Produs p = parseAliment(data,"mic-dejun",  mic_dejunA,  mic_dejun_size,  pranzA, pranz_size, cinaA,
                     cina_size, gustariA, gustari_size);
                 al_consumate.push_back(p);
             }
-                
+            ///citim urmatorul produs
             getline(f, data);
         }
        
-        
+        ///data reprezinta de asemenea anumite alimente
         data = "";
         while (data != "*")
         {
@@ -310,7 +333,8 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         p1 = parseProgress(progres);
         pranz.setProgresExpected(p1);
 
-
+        ///aici ce facem este ca setam progresul pentru pranz
+        ///si il parsuim
         getline(f, progres);
         p1 = parseProgress(progres);
         pranz.setProgresReal(p1);
@@ -346,7 +370,6 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
 
         pranz.setAlimenteConsumate(al_consumate);
         pranz.setAlimenteRecomandate(al_recomandate);
-
 
         al_recomandate.clear();
         al_consumate.clear();
@@ -454,7 +477,18 @@ void getUserMealData(vector<Meal>&m ,Aliment mic_dejunA[100],int mic_dejun_size,
         meal.set_Pranz(pranz);
         meal.set_Cina(cina);
         meal.set_Gustari(gustari);
+        //getline(f, dummy);
+        ///aici ce trebuie sa facem este ca daca mai e sa ramana stelute ce trebuie
+        ///sa le stergem
+        ///facem stergere de stelute
         getline(f, dummy);
+        if (dummy == "*")
+        {
+            while (dummy == "*")
+                getline(f, dummy);  
+            date = dummy;
+        }
         m.push_back(meal);
-    }
+    } 
+  
 }

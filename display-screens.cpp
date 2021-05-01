@@ -5,6 +5,7 @@
 #include <sstream>
 #include <chrono>
 #include <conio.h>
+#include <regex>
 #include "Produs.h"
 #include "Aliment.h"
 #include "User.h"
@@ -24,6 +25,7 @@ extern double userfibres;
 extern double userproteins;
 extern double usersalt;
 
+bool runned = false;
 ///aici scrierea se va face pe 
 ///adica se vor scrie alimentele pe mic dejun , pranz , cina si gustari
 
@@ -189,58 +191,36 @@ void displayData(User u)
 ///la progres vor exista doua optiuni: real si expected
 ///vizualizare alimente: introduse si recomandate
 ///
-void RealProgress()
+void RealProgress(Meal main_meal)
 {
-    ifstream f("progres-real-menu.txt");
-    string line;
-   
-    while (!f.eof())
-    {
-        getline(f, line);
-        cout << "Data:" << line << "\n";
-        cout << "-----Mic dejun-----\n";
-        getline(f, line);
-        cout << "Consum:" << line << endl;
-        getline(f, line);
-        cout << "Carbohidrati:" << line << endl;
-        getline(f, line);
-        cout << "Grasimi:" << line << endl;
+    system("cls");
+    Progres p = main_meal.getReal();
+    cout << "--->> PROGRES REAL <<-----" << endl;
+    cout << "     DATA:" << main_meal.getData() << endl;;
+    cout << endl;
+    cout << "KCAL:" << p.getConsum() << endl;
+    cout << "CARBOHIDRATI:" << p.getCarbohidrati() << endl;
+    cout << "GRASIMI:" << p.getGrasimi() << endl;
+    cout << "PROTEINE:" << p.getProteine() << endl;
 
-        cout << "-----Pranz-----\n";
-        getline(f, line);
-        cout << "Consum:" << line << endl;
-        getline(f, line);
-        cout << "Carbohidrati:" << line << endl;
-        getline(f, line);
-        cout << "Grasimi:" << line << endl;
-        cout << endl << endl;
-        cout << "-----Cina-----\n";
-        getline(f, line);
-        cout << "Consum:" << line << endl;
-        getline(f, line);
-        cout << "Carbohidrati:" << line << endl;
-        getline(f, line);
-        cout << endl << endl;
-        cout << "Grasimi:" << line << endl;
-        cout << endl << endl;
-        cout << "----Gustari----\n";
-        getline(f, line);
-        cout << "Consum:" << line << endl;
-        getline(f, line);
-        cout << "Carbohidrati:" << line << endl;
-        getline(f, line);
-        cout << "Grasimi:" << line << endl;
-        cout << endl << endl;
-    }
-    f.close();
     system("pause");
-
-
 }
 
-void ExpectedProgress()
+void ExpectedProgress(Meal main_meal)
 {
+    Progres p = main_meal.getExpected();
+    system("cls");
+    
+    cout << "--->> PROGRES ASTEPTAT <<-----" << endl;
+    cout << "     DATA:" << main_meal.getData() << endl;;
+    cout << endl;
+    cout << "KCAL:" << p.getConsum() << endl;
+    cout << "CARBOHIDRATI:" << p.getCarbohidrati() << endl;
+    cout << "GRASIMI:" << p.getGrasimi() << endl;
+    cout << "PROTEINE:" << p.getProteine() << endl;
+
     system("pause");
+
 }
 
 
@@ -269,26 +249,124 @@ void recomendedFoods()
 
 }
 
-void afisare_alimente_introduse()
+///aici ne ocupam de a afisa alimentele introduse
+void afisare_alimente_introduse(Meal main_meal)
 {
 
-    ifstream f("alimente-introduse.txt");
-    string line;
-    while (!f.eof())
+    system("cls");
+    cout << "============= MIC DEJUN =============" << endl;
+    vector<Produs> data = main_meal.getMic_de_Jun().getAlimenteConsumate();
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
     {
-        getline(f, line);
-        cout << line << endl;
+        cout << data[i].getAliment().getNume() << endl;
+        cout<<"Cantitate:"<< data[i].getQuantity()<< endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
     }
-    system("pause");
+    
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getPranz().getAlimenteConsumate();
+    cout << "============= PRANZ =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getCina().getAlimenteConsumate();
+    cout << "============= CINA =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getGustari().getAlimenteConsumate();
+    cout << "============= GUSTARI =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl;
     system("pause");
 }
 
-void afisare_alimente_recomandate()
+void afisare_alimente_recomandate(Meal main_meal)
 {
+    system("cls");
+    cout << "============= MIC DEJUN =============" << endl;
+    vector<Produs> data = main_meal.getMic_de_Jun().getAlimenteRecomandate();
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getPranz().getAlimenteRecomandate();
+    cout << "============= PRANZ =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getCina().getAlimenteRecomandate();
+    cout << "============= CINA =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl << endl;
+    data.clear();
+    data = main_meal.getGustari().getAlimenteRecomandate();
+    cout << "============= GUSTARI =============" << endl;
+    cout << "<<<<<------------->>>>>>>" << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i].getAliment().getNume() << endl;
+        cout << "Cantitate:" << data[i].getQuantity() << endl;
+        cout << "Portie:" << data[i].getPortion() << endl << endl;
+        cout << "<<<<<------------->>>>>>>" << endl;
+    }
+
+    cout << endl;
     system("pause");
+   
 }
 
-void viewAlimente()
+void viewAlimente(Meal main_meal)
 {
     system("cls");
     char c = '0';
@@ -303,15 +381,15 @@ void viewAlimente()
     switch (c)
     {
     case '1':
-        afisare_alimente_introduse();
+        afisare_alimente_introduse(main_meal);
         break;
     case '2':
-        afisare_alimente_recomandate();
+        afisare_alimente_recomandate(main_meal);
         break;
     }
 }
 
-void viewProgress()
+void viewProgress(Meal main_meal)
 {
     system("cls");
     char c = '0';
@@ -326,32 +404,34 @@ void viewProgress()
     switch (c)
     {
         case '1':
-            RealProgress();
+            RealProgress(main_meal);
             break;
         case '2':
-            ExpectedProgress();
+            ExpectedProgress(main_meal);
             break;
     }   
 
 }
 
-///in functia asta ce facem este ca avem o functie care
-///ce va face este ca ne va afisa mesele si cand userul selecteaza o masa
-///ii afisam alimentele aferente acelei mese iar el ce va face este ca va selecta una din lista
-///si alimentele selectate le stocam intr-un vector 
 
-void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName)
+///ce face functia asta este ca imi aduca produsele sub forma de elemente de tipul Produs
+//in vectorul aferent si ce facem este ca 
+
+
+void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName,Meal& main_meal)
 {
     ///intram in fisierul cu micul dejun si extragem de acolo toate datele necesare
     /// si dupa ce facem cu ele este ca ne apucam si le afisam ca apoi dupa ce isi alege userul
     ///data sa o putem pune pe 
     Produs p;
-    system("cls");
+   
     ///si acuma vom citi datele intr-un while din fisier
     ///le vom stoca pe toate in aliment
     ///afisam alimentele cu numele mesei aferente
     ///si ce facem este ca intrebam userul de alimentul pe care si-l doreste
     ///sa il i-a si pe langa asta ii cerem si portia cat si cantiatea
+
+    Progres prog;
 
     cout << "<<<<<------------ " << mealName << " <<<<<------------ " << endl;
     cout << endl << endl;
@@ -383,13 +463,28 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName)
     cout << "Introduceti cantitea:";
     double qt,portion;
     cin >> qt;
-    cout << "Introduceti portia:";
+    cout << "Introduceti numarul de portii:";
     cin >> portion;
     p.setCantitate(qt);
     p.setPortion(portion);
-    ///si acuma dupa ce am setat cantitatea si restul intrebam userul daca mai vrea sa mai introduca produse
+   /*
+            Progresul este alcatuit din:
+                -consum 
+                -proteine 
+                -carbohidrati
+                -grasimi
+   
+   */
+
+
+    /// o sa avem doar o functie care va avea ca si parametru si masa unde dorim sa updatam progresul
+    ///asa ca se va rezolva totul dintr-un apel de functie
+    
+    set_progres(main_meal, alim[c - '0' - 1], qt, portion, mealName);
+   
     prod.push_back(p);
 
+    ///trebuie updatat si progresul aicea
     char opt = 'z';
     cout << "\n\n Doriti sa continuati sa introduceti produse??(y/n)\n\n";
     cin >> opt;
@@ -413,11 +508,15 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName)
             cout << "Introduceti cantitea:";
             double qt, portion;
             cin >> qt;
-            cout << "Introduceti portia:";
+            cout << "Introduceti numarul de portii:";
             cin >> portion;
             p.setCantitate(qt);
             p.setPortion(portion);
             ///si acuma dupa ce am setat cantitatea si restul intrebam userul daca mai vrea sa mai introduca produse
+            ///aici ce facem este ca updatam progresul si pentru urmatoarele produse pe care le introduce utilizator
+             ///are loc o updatare de progres de fiecare data
+            set_progres(main_meal, alim[c - '0' - 1], qt, portion, mealName);
+            
             prod.push_back(p);
             cout << "\n\n Doriti sa continuati sa introduceti produse??(y/n)\n\n";
             cin >> opt;
@@ -427,7 +526,8 @@ void setProductData(vector<Produs>&prod,Aliment alim[], int n,string mealName)
     else {
         return;
     }
-
+  
+    
 }
 
 
@@ -454,40 +554,41 @@ int getCalories(Aliment alim[], int n)
     return total;
 }
 
-void writeChosenFood(vector<Produs> p,string meal)
+
+///just some helper functions here
+void displayAlimente(Aliment a[],int n)
 {
-    ofstream f;
-    f.open("alimente-introduse.txt", ios::app);
-    f << "---->> "<< meal <<" <<----\n";
-    for (int i = 0; i < p.size(); i++)
+    system("cls");
+
+    for (int i = 0; i < n; i++)
     {
-        ///aici afisam ulterior datele calculate
-        string line;
-        line = p[i].getAliment().getNume();
-        f << line<<endl;
-        line = "Cantitate:" + to_string(p[i].getQuantity());
-        f << line <<endl;
-        line = "Portie:" + to_string(p[i].getPortion());
-        f << line << endl;
-        
-        
+        cout << a[i].getNume() << endl;
     }
-    f.close();
-  
+
+    system("pause");
+}
+template <class T>
+void display_vector(vector<T> data)
+{
+    system("cls");
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i] << endl;
+    }
+    system("pause");
 }
 
-void writeRecommendedFood()
-{
 
-}
-
-void enterFood()
+void enterFood(Meal& main_meal)
 {
-    
+    ///avem un vector cu alimente
     Aliment alimente[20];
     char opt ='-';
-    Menu micDejun, pranz, cina, gustare;
-    Meal m;
+    Menu micDejun = main_meal.getMic_de_Jun()
+        , pranz = main_meal.getPranz()
+        , cina = main_meal.getCina()
+                , gustare = main_meal.getGustari();
+   
     ///la progres expected vom seta pe fiecare masa consumul
     
 
@@ -511,83 +612,63 @@ void enterFood()
             cin >> opt;
         }
  
-        vector<Produs> prodMicDejun,prodPranz,prodCina,prodGustare;
+        vector<Produs> prodMicDejun = micDejun.getAlimenteConsumate()
+            ,prodPranz = pranz.getAlimenteConsumate()
+            ,prodCina = cina.getAlimenteConsumate()
+            ,prodGustare = gustare.getAlimenteConsumate();
+
         int n = 0;
+      
         switch (opt)
         {
         case '1':
+            ///aici retragem alimentele din fisierul mic de jun
 
             getAlimente(alimente, n, "mic-dejun.txt");
-            setProductData(prodMicDejun, alimente, n, "Mic Dejun");
-            ///si aicea vem si logica progres pe masa
+            setProductData(prodMicDejun, alimente, n, "Mic Dejun",main_meal);
             micDejun.setAlimenteConsumate(prodMicDejun);
-            micDejun.getProgresExpected().setConsum(getCalories(alimente,n));
-            writeChosenFood(prodMicDejun,"Mic dejun");
+            ///la mic dejun setam progresul real ca fiind          
             micDejun.calculateProgressReal();
+            main_meal.set_Mic_Dejun(micDejun);
+         
             break;
 
         case '2':
             getAlimente(alimente, n, "pranz.txt");
-            setProductData(prodPranz, alimente, n, "Pranz");
-            pranz.setAlimenteConsumate(prodPranz);
+            setProductData(prodPranz, alimente, n, "Pranz",main_meal);
+            pranz.setAlimenteConsumate(prodPranz);  
             pranz.calculateProgressReal();
-            pranz.getProgresExpected().setConsum(getCalories(alimente, n));
-            writeChosenFood(prodPranz,"Pranz");
+            main_meal.set_Pranz(pranz);
+            
             break;
         case '3':
             getAlimente(alimente, n, "cina.txt");
-            setProductData(prodCina, alimente, n, "Cina");
+            setProductData(prodCina, alimente, n, "Cina",main_meal);
             cina.setAlimenteConsumate(prodCina);
             cina.calculateProgressReal();
-            cina.getProgresExpected().setConsum(getCalories(alimente, n));
-            writeChosenFood(prodCina,"Cina");
+            main_meal.set_Cina(cina);
             break;
         case '4':
             getAlimente(alimente, n, "gustare.txt");
-            setProductData(prodGustare, alimente, n, "Gustare");
+            setProductData(prodGustare, alimente, n, "Gustare",main_meal);
             gustare.setAlimenteConsumate(prodGustare);
             gustare.calculateProgressReal();
-            gustare.getProgresExpected().setConsum(getCalories(alimente, n));
-            writeChosenFood(prodGustare,"Gustare");
+            main_meal.set_Gustari(gustare);
             break;
         }
     }
-        
-    ///acuma aicea stocam restul datelor in meal
-    ///adica practic datele introduse le stocam in meal
-    m.set_Mic_Dejun(micDejun);
-    m.set_Gustari(gustare);
-    m.set_Pranz(pranz);
-    m.set_Cina(cina);
-    ///aici vom seta si data
-    m.setData(now());
 
-    ///acuma vom creea o functie in produs si acolo vom calcula progresul
-    ///ca dupa sa apelam functia aceasta
-    ofstream f;
-    f.open("progres-real-meal.txt",ios::app);
-    f << m;
-    f.close();
-
-    ofstream g;
-    g.open("progres-real-menu.txt",ios::app);
-
+    vector<Produs> p;
     
-    string data = now();
-
-    g << data<<endl;
-    g << micDejun;
-    g << pranz;
-    g << cina;
-    g <<gustare;
-
-
-    g.close();
 }
 
-void viewData()
+
+void viewData(Meal& main_meal,vector<Meal>&m)
 {
     char c = '0';
+  
+    Progres pr;
+  
 
     while (c != '4')
     {
@@ -606,27 +687,115 @@ void viewData()
         switch (c)
         {
         case '1':
-            viewProgress();
+           
+            viewProgress(main_meal);
             break;
         case '2':
-            viewAlimente();
+            viewAlimente(main_meal);
             break;
         case '3':
-            enterFood();
+            
+            
+            enterFood(main_meal);
+
             break;
         case '4':
             break;
 
         }
     }
+ 
+ 
+}
+
+
+
+Meal searchData(vector<Meal> m)
+{
+    system("cls");
+    string data;
+    cout << "Introduceti va rog frumos o data (dd/mm/yyyy):" << endl;
+    cin >> data;
+    while (!checkData(data))
+    {
+        system("cls");
+        cout << "Va rog introduceti o data corecta!(dd/mm/yyyy):";
+        cin >> data;
+    }
+    return searchMeal(m,data);
 
 }
 
-void welcome(User u)
+
+void askOrSearch(Meal& main_meal,vector<Meal> m,bool runn)
+{
+    if (runn)
+        return;
+    else {
+        system("cls");
+        cout << "Doriti sa :" << endl;
+        cout << "1.Afisati si modificati datele pentru o noua masa din ziua curenta?" << endl;
+        cout << "2.Vizualizati si modificati datele pentru o masa din trecut?" << endl;
+        char c = '0';
+        cin >> c;
+        while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2)) || !isdigit(c))
+        {
+            cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
+            cin >> c;
+        }
+        Meal d;
+        switch (c)
+        {
+        case '1':
+            return;
+            break;
+        case '2':
+            d = searchData(m);
+            break;
+
+        }
+
+        ///userul aici ar trebui sa aiba doua optiuni
+        ///fie continua cautarea fie merge mai departe si i-a o masa default
+
+        c = 't';
+        while (d.getData() == "default")
+        {
+            system("cls");
+            cout << "Nu a fost gasita o intrare cu data aferenta! Doriti sa cautati alta data??(y/n)";
+            cin >> c;
+            while (c != 'y' && c != 'n')
+            {
+                cout << endl << "Introduceti o optiune valida va rog!! (y/n)" << endl;
+                cin >> c;
+            }
+            switch (c)
+            {
+            case 'y':
+                d = searchData(m);
+                break;
+            case 'n':
+                return;
+                break;
+            }
+        }
+
+
+        main_meal = d;
+
+    }
+   
+}
+
+///to do :
+/// introdu o functie care sa caute o anumita data in fisier
+///ca userul sa lucreze fie cu meal-ul actual fie cu unul precedent
+void welcome(User u,Meal& main_meal,vector<Meal>m)
 {
    
     char c ='0';
-    
+    Progres prog;
+   
     while (c != '4')
     {
         
@@ -639,6 +808,7 @@ void welcome(User u)
         cout << "4.Intoarcere";///aicea ne ofera posibilitatea de a ne intoarce la ecranul anterior
         cout << endl;
         cin >> c;
+       
         while ((isdigit(c) && ((c - '0') != 1 && (c - '0') != 2) && (c - '0') != 3 && (c - '0') != 4) || !isdigit(c))
         {
             cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
@@ -653,7 +823,11 @@ void welcome(User u)
             writeAlimente();
             break;
         case '3':
-            viewData();
+    
+           askOrSearch(main_meal,m,runned);
+           runned = true;
+           viewData(main_meal,m);
+
             break;
         case '4':
             break;

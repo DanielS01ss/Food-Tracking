@@ -602,7 +602,7 @@ void login(User u)
 {
     ///aici trebuie sa citim datele si sa facem gathering
 
-    welcome(u);
+  // welcome(u);
 
 
 }
@@ -733,43 +733,52 @@ bool existsUser()
 
 ///cum fac valorie externe???
 
-ostream& operator<<(ostream& o, Produs p)
+
+
+ostream& operator<<(ostream& o, Produs& p)
 {
-    o << "Nume:" << p.getAliment().getNume() << "  Portie:" << p.getPortion() << "  Cantitate:" << p.getQuantity() << endl;
+    o << p.getAliment().getNume() <<","<< p.getPortion() << "," << p.getQuantity() << endl;
     return o;
 }
 
-ostream& operator<<(ostream& o, Progres p)
+ostream& operator<<(ostream& o, Progres& p)
 {
-    o << p.getConsum() << endl << p.getCarbohidrati() << endl << p.getGrasimi() << endl;
+    o << p.getConsum() << "," << p.getCarbohidrati() << "," << p.getGrasimi() << endl;
     return o;
 }
 
 ostream& operator<<(ostream& o, Menu& m)
 {
-    o <<"Progres Real:"<<m.getReal()<<endl;
-    o<< "Progres asteptat:"<<m.getExpected();
+    Progres real = m.getReal();
+    Progres expected = m.getExpected();
+    o << real;
+    o << expected;
     ///iteram alimente consumate si alimente recomandate
     vector<Produs> alim_cons = m.getAlimenteConsumate();
-    vector<Produs> alim_recom = m.getAlimenteConsumate();
+    vector<Produs> alim_recom = m.getAlimenteRecomandate();
+    //ce facem este ca ar trebui sa afisam stelute numai daca datele exista
+    ///ca sa nu am doua stelute sau mai multe una dupa alta ca sa imi dea functia de citire peste cap
+    o << "*" << endl;
     for (int i = 0; i < alim_cons.size(); i++)
     {
-        o << alim_cons[i] << endl;
+        o << alim_cons[i];
     }
-    o << endl;
+    o << "*" << endl;
     for (int i = 0; i < alim_recom.size(); i++)
     {
-        o << alim_recom[i] << endl;
+        o << alim_recom[i];
     }
-
+    o << "*" << endl;
     return o;
 }
 
 ostream& operator<<(ostream& z, Meal& m)
 {
+    Progres real = m.getReal();
+    Progres expected = m.getExpected();
      z << "Data:"<<m.getData()<<endl;
-     z <<"Progres Real:"<< m.getReal();
-     z <<"Progres asteptat:"<<m.getExpected();
+     z <<"Progres Real:"<< real;
+     z <<"Progres asteptat:"<<expected;
      z << "Mic dejun:"<< m.mic_dejun << endl;
      z << "Pranz:"<< m.pranz << endl;
      z <<"Cina:"<<m.cina << endl;
@@ -789,12 +798,27 @@ ostream& operator<<(ostream& z, Meal& m)
 ///si vom avea si un sistem prin care stocam datele in fisier
 //practic un format ca dupa sa stim cum va functiona si data Gathering-ul
 
+Meal checkMainMeal(vector<Meal> m,string data)
+{
+    ///iteram vectorul cu mese si dupa ce facem este ca daca gasim o masa care are aceiasi data cu aceasta
+    ///atunci o vom lua pe aceea
+    for (int i = 0; i < m.size(); i++)
+    {
+        if (m[i].getData() == data)
+        {
+            return m[i];
+        }
+    }
+    Meal m2;
 
+    return m2;
+}
 
 int main()
 {
-    
+    ///declaram userul
    User u1;
+   ///tragem alimentele
     Aliment mic_dejun[100],pranz[100],gustari[100],cina[100];
     int nr = 0,
         mic_dejun_size=0,
@@ -805,19 +829,56 @@ int main()
   
    ///ar trebui sa tragem datele din fisier
     ///din toate cele 3 fisiere ca apoi sa putem opera cu ele
+    ///luam alimentele din fisier si ne jucam cu ele
     getAlimente(mic_dejun, mic_dejun_size,"mic-dejun.txt");
     getAlimente(pranz, pranz_size, "pranz.txt");
     getAlimente(cina, cina_size, "cina.txt");
     getAlimente(gustari, gustari_size, "gustare.txt");
+    ///recomandam alimente ca dupa sa ne jucam cu ele
+
     getUserMealData(m, mic_dejun, mic_dejun_size, pranz, pranz_size, cina, cina_size, gustari, gustari_size);
-    
-    for (int i = 0; i < m.size(); i++)
-    {
-        cout << m[i] << endl;
-    }
    
+    ///aici avem masa principala
+    
+    
+
+ 
+    ///prima data catuam in fisier mealul cu data curenta si ce facem
+    ///este ca daca o gasim ne apucam si o luam ca si main meal
+    ///ca dupa sa lucram pe ea
   
-    /*
+   
+    Meal main_meal;
+    bool checked = false;
+    Meal dummy = checkMainMeal(m, now());
+ 
+    if (!checked)
+    {
+        if (dummy.getData() != "default")
+        {
+            main_meal = dummy;
+           
+            checked = true;
+        }
+        else {
+            //daca masa nu exista o creem si ii setam data curenta
+            main_meal.setData(now());
+            checked = true;
+        }
+    }
+    
+ 
+    ///ii setam si data
+
+   
+    Progres p;
+   /* cout << main_meal << endl;
+    system("pause");
+    exit(0);*/
+
+
+
+  
     ///daca userul nu exista
     ///trebuie sa creem unul
     ///si asta trebuie sa fie necesar
@@ -826,7 +887,10 @@ int main()
     ///daca nu avem user fortam creeare unuia!!
     ///si dupa ce facem este ca vom merge mai departe cu meniul
     char c = '0';
-  
+    
+
+
+
     if (userExists)
     {
         u1 = dataGathering();
@@ -835,9 +899,30 @@ int main()
         userfibres = calculateFibres(userkcalPerDay);
         userglucides = calculateCarbs(u1, userkcalPerDay);
         userproteins = calculateProteins(u1, userkcalPerDay);
-    }
+        ///si trebuie sa initializam si datele pentru meal pentru user
+        ///si setam progresul expected pentru user
+        ///si o sa avem asa:
+        p = main_meal.getExpected();
+        p.setCarbohidrati(userfibres);
+        system("cls");
+        p.setConsum(userkcalPerDay);
+        p.setGrasimi(userfats);
+        p.setProteine(userproteins);    
+        main_meal.set_Expected(p);
         
+        recommendFoodPerMeal(main_meal, mic_dejun, mic_dejun_size, pranz, pranz_size, cina, cina_size, gustari, gustari_size);
+        ///dupa ce ii recomandam mancarea ar trebui sa calculam si progres expected daca nu facem asta deja
+        main_meal.calculate_progres_expected();
+        
+    }
+   
+    ///in momentul in care functia este apelata se calculeaza si se recomanda mancarea
+    ///si se va seta pe main meal
+    
+   ///display_logo();
+   
 
+    
     while (c != '5')
     {
         fflush(stdin);
@@ -877,7 +962,8 @@ int main()
                     //welcome(u1);
                     break;
                 case '4':
-                    welcome(u1);
+                   
+                    welcome(u1,main_meal,m);
                     break;
                 case '5':
                     exit(0);
@@ -898,15 +984,9 @@ int main()
                     cout << "\nIntroduceti o optiune valida va rog!!!\n\n";
                     cin >> c;
                 }
-
-
             }
-         
-
         }
-        else {
-
-         
+      else {
             while (c != '5' && c != '1')
             {
                 
@@ -930,7 +1010,15 @@ int main()
                 userfibres = calculateFibres(userkcalPerDay);
                 userglucides = calculateCarbs(u1, userkcalPerDay);
                 userproteins = calculateProteins(u1, userkcalPerDay);
-                welcome(u1);
+                p = main_meal.getExpected();
+                p.setCarbohidrati(userfibres);
+                p.setConsum(userkcalPerDay);
+                p.setGrasimi(userfats);
+                p.setProteine(userproteins);
+                main_meal.set_Expected(p);
+                recommendFoodPerMeal(main_meal, mic_dejun, mic_dejun_size, pranz, pranz_size, cina, cina_size, gustari, gustari_size);
+                main_meal.calculate_progres_expected();
+                welcome(u1,main_meal,m);
                 userExists = true;
                 break;
             case '5':
@@ -939,9 +1027,25 @@ int main()
 
         }
     }
-    */
+    ///dupa ce userul termina de executat tot aici vom face o functie care sa salveze datele in fisier
+    ///datele pe care el le-a scris
+    ///se vor salva sub forma de meal
+   
+
+   // main_meal.calculate_progress_real();
+    //main_meal.calculate_progres_expected();
+   
+   
+    if(m.size()>0 && main_meal.getData()!=now())
+        m.push_back(main_meal);
+    else if (m.size() == 0)
+    {
+        m.push_back(main_meal);
+    }
+ 
+
+
+   /// saveData(m); 
     
     return 0;
 }
-
-

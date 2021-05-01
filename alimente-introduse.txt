@@ -26,3 +26,43 @@ Portie:1.000000
 Paine
 Cantitate:1.000000
 Portie:1.000000
+---->> Mic dejun <<----
+Paine
+Cantitate:100.000000
+Portie:1.000000
+---->> Mic dejun <<----
+Avocado
+Cantitate:1.000000
+Portie:1.000000
+---->> Pranz <<----
+Ciorba
+Cantitate:100.000000
+Portie:1.000000
+---->> Mic dejun <<----
+Paine
+Cantitate:100.000000
+Portie:1.000000
+---->> Gustare <<----
+Ciocolata
+Cantitate:100.000000
+Portie:1.000000
+---->> Mic dejun <<----
+Branza
+Cantitate:300.000000
+Portie:1.000000
+---->> Cina <<----
+Sunca
+Cantitate:100.000000
+Portie:32.000000
+---->> Mic dejun <<----
+Paine
+Cantitate:100.000000
+Portie:20.000000
+---->> Mic dejun <<----
+Branza
+Cantitate:100.000000
+Portie:1.000000
+---->> Mic dejun <<----
+Branza
+Cantitate:100.000000
+Portie:1.000000

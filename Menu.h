@@ -51,15 +51,26 @@ public:
 	
 	void calculateProgressReal()
 	{
-		/*
+		
+		int consum =0;
+		double proteine = 0;
+		double carbo = 0;
+		double grasimi= 0 ;
+
+
 		for (int i = 0; i < this->alimente_consumate.size(); i++)
 		{
 			
-			this->real.setConsum((this->alimente_consumate[i].getAliment().getValEnergetica() * this->alimente_consumate[i].getQuantity()) / this->alimente_consumate[i].getAliment().getCantitate());
-			this->real.setProteineMIN(this->alimente_consumate[i].getAliment().getProteine());
-			this->real.setCarbohidratiMIN(this->alimente_consumate[i].getAliment().getGlucide());
-			this->real.setGrasimiMIN(this->alimente_consumate[i].getAliment().getGrasimi());
-		} */
+			consum += ((alimente_consumate[i].getQuantity() * alimente_consumate[i].getAliment().getValEnergetica()) / alimente_consumate[i].getAliment().getCantitate())*alimente_consumate[i].getPortion();
+			proteine+= ((alimente_consumate[i].getQuantity() * alimente_consumate[i].getAliment().getProteine()) / alimente_consumate[i].getAliment().getCantitate()) * alimente_consumate[i].getPortion();
+			carbo+= ((alimente_consumate[i].getQuantity() * alimente_consumate[i].getAliment().getGlucide()) / alimente_consumate[i].getAliment().getCantitate()) * alimente_consumate[i].getPortion();
+			grasimi += ((alimente_consumate[i].getQuantity() * alimente_consumate[i].getAliment().getGrasimi()) / alimente_consumate[i].getAliment().getCantitate()) * alimente_consumate[i].getPortion();
+			
+		} 
+		this->real.setConsum(consum);
+		this->real.setProteine(proteine);
+		this->real.setCarbohidrati(carbo);
+		this->real.setGrasimi(grasimi);
 	}
 	///aici faza e ca ne va calcula functia 
 	void calculateProgressExpected()

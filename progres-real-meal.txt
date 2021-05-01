@@ -72,3 +72,256 @@
 0
 0
 0
+Data:28/03/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Paine,1,100
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:28/03/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Avocado,1,1
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:28/03/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+Ciorba,1,100
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:28/03/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Paine,1,100
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+Ciocolata,1,100
+*
+*
+
+Data:28/03/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Branza,1,300
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:29/04/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+Sunca,32,100
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:29/04/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Paine,20,100
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:29/04/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Branza,1,100
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+
+Data:29/04/2021
+Progres Real:0,0,0
+Progres asteptat:0,0,0
+Mic dejun:0,0,0
+0,0,0
+*
+Branza,1,100
+*
+*
+
+Pranz:0,0,0
+0,0,0
+*
+*
+*
+
+Cina:0,0,0
+0,0,0
+*
+*
+*
+
+Gustari:0,0,0
+0,0,0
+*
+*
+*
+

@@ -5,7 +5,11 @@ class Progres {
 public:
 	Progres()
 	{
-	
+		
+		this->consumul = 0;
+		this->proteine = 0;
+		this->carbohidrati = 0;
+		this->grasimi = 0;
 	}
 
 	int getConsum()
@@ -47,14 +51,18 @@ public:
 		this->grasimi = grasimi;
 	}
 
-	/*Progres operator+(Progres p)
+	Progres operator+(Progres p)
 	{
 		Progres res;
+		
 		res.consumul = this->consumul + p.consumul;
-		res.carbohidratiMIN = this->carbohidratiMIN + p.carbohidratiMIN;
-		res.grasimiMIN = this->grasimiMIN + p.grasimiMIN;
+		res.carbohidrati= this->carbohidrati+ p.carbohidrati;
+		res.proteine = this->proteine + p.proteine;
+		res.grasimi = this->grasimi+ p.grasimi;
+
+		return res;
 	}
-	*/
+
 	friend ostream& operator<<(ostream& o, Progres& p);
 
 private:
